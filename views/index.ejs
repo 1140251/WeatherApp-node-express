@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+    <meta charset="utf-8">
+    <title>Weather Map</title>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/style.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <% include functions.ejs %> 
+    <div class="site-content">
+        <div class="hero" data-bg-image="images/banner.png" style="background-image: url(<%if (photo) { %><%= photo %><% }else{%>images/banner.png<% }%>);">
+            <div class="container">
+                <form action="/" class="find-location" method="POST">
+                    <input name="city" type="text" placeholder="Find your location..." required>
+                    <input type="hidden" name="type" value="city">
+                    <input type="submit" value="Find">
+                </form>
+            </div>
+        </div>
+        <div class="forecast-table">
+            <div class="container">
+                    <div class="forecast-container">
+                    <%if (weather) { %>
+                    <div class="today forecast">
+                        <div class="forecast-header">
+                            <div class="day"><%= getWeekDayName(weather.data[0].valid_date) %></div>
+                            <div class="date"><%= new Date(weather.data[0].valid_date).getDate() %> <%=getMonthName(weather.data[0].valid_date) %></div>
+                        </div>
+                        <!-- .forecast-header -->
+                        <div class="forecast-content">
+                            <div class="location"><%= weather.city_name %>, <%= weather.country_code %></div>
+                            <div class="degree">
+                                <div class="num"><%= weather.data[0].temp %><sup>o</sup>C</div>
+                                <div class="forecast-icon">
+                                    <img src="images/icons/<%= getIcon(weather.data[0].weather.code) %>.svg" alt="" width=90>
+                                    <span><%= weather.data[0].weather.description %></span>
+                                </div>
+                            </div>
+                            <span>
+                                <img src="images/icon-umberella.png" alt=""><%= weather.data[0].pop %> %</span>
+                            <span>
+                                <img src="images/icon-wind.png" alt=""><%= convertMPSToKMPH(weather.data[0].wind_spd) %> (<%=convertMPSToKMPH(weather.data[0].wind_gust_spd) %>) km/h</span>
+                            <span>
+                                <img src="images/icon-compass.png" alt=""><%= weather.data[0].wind_cdir_full %></span>
+                        </div>
+                    </div>
+                    <% for(var i=1; i < weather.data.length; i++) { %>
+                        <div class="forecast">
+                            <div class="forecast-header">
+                                <div class="day"><%= getWeekDayName(weather.data[i].valid_date) %></div>
+                            </div>
+                            <!-- .forecast-header -->
+                            <div class="forecast-content">
+                                <div class="forecast-icon">
+                                    <img src="images/icons/<%= getIcon(weather.data[i].weather.code) %>.svg" alt="" width=48>
+                                </div>
+                                <div class="degree"><%= weather.data[i].max_temp %><sup>o</sup>C</div>
+                                <small><%= weather.data[i].min_temp %><sup>o</sup>C</small>
+                            </div>
+                        </div>
+                    <% } %>     
+                <% } else {%>
+                    <div class="forecast">
+                        <div class="forecast-error">
+                            <span>Location not Found!</span>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            </div>
+        </div>
+        <footer class="site-footer">
+            <div class="container">
+                <p class="colophon">Copyright 2018 Daniel Dias. Designed by Themezy. All rights reserved</p>
+            </div>
+        </footer>
+        <!-- .site-footer -->
+    </div>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <%if (!weather && error!=true) { %>
+        <script src="js/main.min.js"></script>
+    <% } %>
+</body>
+</html>

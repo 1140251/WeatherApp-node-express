@@ -1,0 +1,19 @@
+<%
+getWeekDayName = function(value) {
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    d = new Date(value);
+    return dayName = days[d.getDay()];
+}
+
+getMonthName = function(value){
+    monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+    d = new Date();
+    return monthName= monthNames[d.getMonth()];
+}
+
+convertMPSToKMPH = function(x) {
+    return x = Math.round(Number(x)  * 3.6  * 100) / 100 ;
+}
+
+%>
