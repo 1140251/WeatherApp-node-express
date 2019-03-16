@@ -11,7 +11,6 @@ app.set('view engine', 'ejs')
 let weather, error = false
 let photo
 app.get('/', function (req, res) {
-    //res.send('Hello World!')
     res.render('index', { weather: weather, error: error, photo:photo })
 })
 app.locals.getIcon = function (code) {
@@ -53,14 +52,14 @@ app.post('/', function (req, res) {
                         data_photo += chunk
                     })
                     resp_photo.on('end', () => {
-                        let temp =  JSON.parse(data_photo)
-                        photo = temp.photos[0].image.web
-
+                        if(resp_photo.statusCode != 404){
+                            let temp =  JSON.parse(data_photo)
+                            photo = temp.photos[0].image.web
+                        }
                         res.render('index', { weather: weather, error: error, photo: photo })
                         res.end()
                     })
                 }).on("error", (err) => {
-                    console.log("Error: " + err.message)
                     weather = null
                     error = true
                     res.render('index', { weather: weather, error: error, photo:photo })
