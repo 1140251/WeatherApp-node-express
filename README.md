@@ -31,7 +31,7 @@ npm run start
 ```
 
 ## Example
-![WeatherApp](..\public\images\weather-app-example.png)
+![WeatherApp](.\public\images\weather-app-example.png)
 ## License
 
 MIT © [Daniel Maia Dias]
