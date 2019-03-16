@@ -7,6 +7,7 @@ A simple Weather App
 ### Requirements
  - Node Version > 8.3.0 (ES6 Support)
  - NPM stable release
+ - weatherbit.io apiKey
 
 ### Setup
 
@@ -20,7 +21,7 @@ npm install
 {
     "host" : "your-host",
     "port" : "your-port"
-    "apikey": "your weatherbit.io apiKey "
+    "apikey": "your weatherbit.io apiKey"
 }
 ```
 
@@ -30,7 +31,7 @@ npm run start
 ```
 
 ## Example
-![alt](public\images\weather-app-example.png)
+![WeatherApp](..\public\images\weather-app-example.png)
 ## License
 
 MIT © [Daniel Maia Dias]
